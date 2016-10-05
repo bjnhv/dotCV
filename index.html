@@ -1,0 +1,254 @@
+<html>
+   <head>
+      <title>dotCV</title>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+      
+      <style>
+         table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+         }
+         
+         table tr:nth-child(odd) {
+            background-color: #f0f0f0;
+         }
+         
+         table tr:nth-child(even) {
+            background-color: #ffffff;
+         }
+         input.ng-valid {
+             background-color: lightgreen;
+      </style>
+      
+   </head>
+   <body>
+      
+      <h2>CV generator</h2>
+      <div ng-app = "CvApp" ng-controller = "CvController">
+         
+         <form name = "dotCvForm" ng-submit="submitForm()" novalidate>
+            <table border = "0">
+               <tr>
+                  <td>first name:</td>
+                  <td><input name = "firstname" type = "text" ng-model = "firstName" required>
+                     <span style = "color:red" ng-show = "dotCvForm.firstname.$dirty && dotCvForm.firstname.$invalid"> 
+                           <span ng-show = "dotCvForm.firstname.$error.required">First Name is required.</span>
+                     </span>
+                  </td>
+               </tr>
+               
+               <tr>
+                  <td>middle name:</td>
+                  <td><input name = "midname" type = "text" ng-model = "midName">
+                     <span style = "color:red" ng-show = "dotCvForm.midname.$dirty && dotCvForm.midname.$invalid"> 
+                           <span ng-show = "dotCvForm.midname.$error.required">middle Name is required.</span>
+                     </span>
+                  </td>
+               </tr>
+
+               <tr>
+                  <td>last name: </td>
+                  <td><input name = "lastname"  type = "text" ng-model = "lastName" required>
+                     <span style = "color:red" ng-show = "dotCvForm.lastname.$dirty && dotCvForm.lastname.$invalid">
+                        <span ng-show = "dotCvForm.lastname.$error.required">Last Name is required.</span>
+                     </span>
+                  </td>
+               </tr>
+               
+               <tr>
+                  <td>date of birth: </td>
+                  <td><input name = "date"  type = "text" ng-model = "date" required>
+                     <span style = "color:red" ng-show = "dotCvForm.date.$dirty && dotCvForm.date.$invalid">
+                        <span ng-show = "dotCvForm.date.$error.required">date is required.</span>
+                     </span>
+                  </td>
+               </tr>
+               <tr>
+                  <td>address </td>
+               </tr>
+
+                <tr>
+                  <td>city: </td>
+                  <td><input name = "city"  type = "text" ng-model = "city" required>
+                     <span style = "color:red" ng-show = "dotCvForm.city.$dirty && dotCvForm.city.$invalid">
+                        <span ng-show = "dotCvForm.city.$error.required">city is required.</span>
+                     </span>
+                  </td>
+               </tr>
+
+                <td>street: </td>
+                  <td><input name = "street"  type = "text" ng-model = "street" required>
+                     <span style = "color:red" ng-show = "dotCvForm.street.$dirty && dotCvForm.street.$invalid">
+                        <span ng-show = "dotCvForm.street.$error.required">street is required.</span>
+                     </span>
+                  </td>
+               </tr>
+
+                <td>number: </td>
+                  <td><input name = "number"  type = "number" ng-model = "number" required>
+                     <span style = "color:red" ng-show = "dotCvForm.number.$dirty && dotCvForm.number.$invalid">
+                        <span ng-show = "dotCvForm.number.$error.required">number is required.</span>
+                     </span>
+                  </td>
+               </tr>
+
+                <td>apartment: </td>
+                  <td><input name = "apartment"  type = "text" ng-model = "apartment">
+                     <span style = "color:red" ng-show = "dotCvForm.apartment.$dirty && dotCvForm.apartment.$invalid">
+                        <span ng-show = "dotCvForm.apartment.$error.required">apartment is required.</span>
+                     </span>
+                  </td>
+               </tr>
+
+               <td>zipcode: </td>
+                  <td><input name = "zipcode"  type = "number" ng-model = "zipCode" required>
+                     <span style = "color:red" ng-show = "dotCvForm.zipcode.$dirty && dotCvForm.zipcode.$invalid">
+                        <span ng-show = "dotCvForm.zipcode.$error.required">zipcode is required.</span>
+                     </span>
+                  </td>
+               </tr>
+
+              <div id = email>
+               <tr>
+                  <td>Email: </td>
+                  <td><input name = "email" type = "email" ng-model = "email" length = "100" required>
+                     <span style = "color:red" ng-show = "dotCvForm.email.$dirty && dotCvForm.email.$invalid">
+                        <span ng-show = "dotCvForm.email.$error.required">Email is required.</span>
+                        <span ng-show = "dotCvForm.email.$error.email">Invalid email address.</span>
+                     </span>
+                  </td>
+
+                  <td><button ng-click = "addEmail('email');">+</button></td>
+               </tr>
+               </div>
+
+               <div id = phone>
+               <tr>
+                  <td>phone: </td>
+                  <td><input name = "phone" type = "number" ng-model = "phone" length = "100" required>
+                     <span style = "color:red" ng-show = "dotCvForm.phone.$dirty && dotCvForm.phone.$invalid">
+                        <span ng-show = "dotCvForm.phone.$error.required">phone is required.</span>
+                        <span ng-show = "dotCvForm.phone.$error.number">Invalid phone number.</span>
+                     </span>
+                  </td>
+
+                  <td><button ng-click = "addPhone('phone');">+</button></td>
+               </tr>
+               </div>
+
+               <tr>
+                  <td>
+                     <button ng-click = "reset()">Reset</button>
+                  </td>
+                  <td>
+                     <button ng-disabled = "dotCvForm.firstname.$invalid || dotCvForm.lastname.$invalid ||  dotCvForm.email.$invalid || dotCvForm.lastname.$invalid || dotCvForm.street.$invalid || dotCvForm.number.$invalid || dotCvForm.zipcode.$invalid ||dotCvForm.phone.$invalid ||dotCvForm.email.$invalid">Submit</button>
+                  </td>
+               </tr>
+                    
+            </table>
+         </form>
+      </div>
+      
+      <script>
+
+         var CvApp = angular.module("CvApp", []);
+         
+         CvApp.controller('CvController', function($scope) {
+            $scope.reset = function(){
+               $scope.firstName = "";
+               $scope.midName = "";
+               $scope.lastName = "";
+               $scope.date = "";
+               $scope.city = "";
+               $scope.street = "";
+               $scope.number = "";
+               $scope.apartment = "";
+               $scope.zipCode = "";
+               $scope.email = "";
+               $scope.email2 = "";
+               $scope.phone = "";
+               $scope.phone2 = "";
+            },
+            mailCounter =   1;
+            $scope.addEmail = function(trName){ // add email field
+               if (mailCounter < 2) { 
+                var newtr = document.createElement('tr');
+                newtr.innerHTML = "<td>Email"+(mailCounter + 1)+":</td> <td><input name = 'email'"+(mailCounter + 1)+" type = 'email' ng-model = 'email'"+(mailCounter + 1)+" length = '100' > </td>";
+                document.getElementById(trName).appendChild(newtr);
+                mailCounter++;
+             }
+            },
+            phoneCounter = 1;
+            $scope.addPhone = function(trName){ // add email field
+               if (phoneCounter < 2) { 
+                var newtr = document.createElement('tr');
+                newtr.innerHTML = "<td>phone"+(phoneCounter + 1)+":</td> <td><input name = 'phone'"+(phoneCounter + 1)+" type = 'phone' ng-model = 'phone'"+(phoneCounter + 1)+" length = '100' > </td>";
+                document.getElementById(trName).appendChild(newtr);
+                phoneCounter++;
+             }
+
+            },
+            
+            $scope.submitForm = function() {
+
+            // check to make sure the form is completely valid
+            // if ($scope.userForm.$valid) {
+            //     alert('good form');}
+            // else {alert('somthing wrong');}
+
+        };
+
+      });
+      </script>
+
+    
+      
+   </body>
+</html>
+
+
+
+
+ <!-- code to understand
+
+ <script>
+$(function(){
+   $("input").focus(function(){
+        $(this).css("background-color", "#cccccc");
+    });
+    $("input").blur(function(){
+        $(this).css("background-color", "#ffffff");
+    });
+    $('form').submit(function() {
+        $('#result').text(JSON.stringify($('form').serializeObject()));
+        return false;
+    });
+});
+
+    
+
+</script>
+</head>
+<body>
+<script>
+   serializeObject = function()   
+{
+    var o = {};
+    var a = this.serializeArray();  
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+</script>
+ -->
+ 
