@@ -1,0 +1,42 @@
+<html>
+   <head>
+      <title>dotCV</title>
+      <script src = "angular.min.js"></script>
+      <script src = "main.js"></script>
+      <script src = "fileSaver.js"></script>
+   </head>
+
+   <body>
+      
+      <h2>CV generator</h2>
+
+      <div ng-app = "CvApp" ng-controller = "CvController">
+         
+            <table border = "0">
+               <tr ng-repeat="attribute in cv">
+                  <td>{{ attribute.displayName }}</td>
+                  <td><input type = "text" ng-model = "attribute.value" required>
+                     <span style = "color:red" ng-show = "attribute.value.$dirty && attribute.value.$invalid"> 
+                           <span ng-show = "attribute.value.$error.required">{{ attribute.displayName }} is required.</span>
+                     </span>
+                  </td>
+               </tr>
+                  
+              <!-- <td><button ng-click = "addPhone('phone');">+</button></td> -->
+               <tr>
+                  <td>
+                     <button ng-click = "reset()">Reset</button>
+                  </td>
+                  <td>
+                     <button ng-click="submitForm()" ng-disabled = "cv.firstname.value.$invalid">Submit</button>
+                  </td>
+               </tr>
+
+            </table>
+            <div ng-show="validCheck()" style = "color:green">form OK</div>
+            <button ng-click="showValues = ! showValues">Show Values</button>
+            <div ng-show="showValues">{{ cv }}</div>
+            <button ng-click="saveValues()">Save Text file</button>
+    </div>
+  </body>
+</html>
