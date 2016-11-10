@@ -1,4 +1,5 @@
 # dotCV
 CV generator
 
-for now JS include in html file as <script>
+angular plugin not working on this page in chrome - need 2 understand why/
+validCheck function not working pls help!!!
